@@ -5,7 +5,7 @@ on:
     branches: [main]
 
 env:
-  IMAGE_NAME: mydockerhub/potato-detector-api
+  IMAGE_NAME: jeevanjyoti18/potato-detector-api
 
 jobs:
   build-and-deploy:
