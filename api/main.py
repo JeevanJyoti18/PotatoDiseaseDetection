@@ -35,7 +35,7 @@ app.add_middleware(
 
 #  'serving_default': This is the default name for the signature that is used for inference
 # The serving_default is the most common signature used for inference (making predictions).
-MODEL = tf.keras.models.load_model("../saved_models/3.keras" )
+MODEL = tf.keras.models.load_model("saved_models/3.keras" )
 
 CLASS_NAMES = ["Early Blight", "Late Blight", "Healthy"]
 
