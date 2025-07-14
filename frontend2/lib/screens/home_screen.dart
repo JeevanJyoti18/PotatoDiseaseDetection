@@ -1,4 +1,3 @@
-import 'dart:typed_data';
 import 'dart:io' as io; // For mobile
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
@@ -9,10 +8,10 @@ import 'dart:ui'; // Add this at the top with other imports
 
 class PotatoDiseaseDetector extends StatefulWidget {
   @override
-  _PotatoDiseaseDetectorState createState() => _PotatoDiseaseDetectorState();
+  PotatoDiseaseDetectorState createState() => PotatoDiseaseDetectorState();
 }
 
-class _PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
+class PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
   Uint8List? webImage;        // For web
   io.File? pickedFile;        // For mobile
   String resultText = "";     // API result text
@@ -40,7 +39,7 @@ class _PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
       // Call your backend API for classification
       await classifyImage(result.files.single);
     } else {
-      print("No file selected");
+      // print("No file selected"); // Avoid print in production
     }
   }
 
@@ -146,7 +145,7 @@ class _PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
                       color: Colors.pink.withValues(alpha: 0.3),
                       width: 1.5,
                     ),
-                    boxShadow: [
+                    boxShadow: const [
                       BoxShadow(
                         color: Colors.black12,
                         blurRadius: 8,
@@ -157,38 +156,38 @@ class _PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
                   child: Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Text(
+                      const Text(
                         "Class:",
                         style: TextStyle(
                           fontSize: 20,
-                          color: Colors.pink[800],
+                          color: Colors.pink,
                           fontWeight: FontWeight.w600,
                           letterSpacing: 1.2,
                         ),
                       ),
                       Text(
                         predictedClass!,
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 28,
-                          color: Colors.pink[900],
+                          color: Colors.pink,
                           fontWeight: FontWeight.bold,
                           letterSpacing: 1.5,
                         ),
                       ),
                       const SizedBox(height: 12),
-                      Text(
+                      const Text(
                         "Confidence:",
                         style: TextStyle(
                           fontSize: 18,
-                          color: Colors.grey[700],
+                          color: Colors.grey,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
                       Text(
                         "${(confidence! * 100).toStringAsFixed(3)}%",
-                        style: TextStyle(
+                        style: const TextStyle(
                           fontSize: 24,
-                          color: Colors.green[700],
+                          color: Colors.green,
                           fontWeight: FontWeight.bold,
                         ),
                       ),

@@ -56,7 +56,7 @@ class _DragDropWidgetState extends State<DragDropWidget> {
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: const [
+            children: [
               Icon(
                 _isDragOver ? Icons.cloud_download : Icons.cloud_upload,
                 size: 80,
@@ -64,7 +64,7 @@ class _DragDropWidgetState extends State<DragDropWidget> {
                   ? Theme.of(context).primaryColor 
                   : Colors.grey.shade400,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Text(
                 'Drag and drop an image of a potato plant leaf to process',
                 textAlign: TextAlign.center,
@@ -76,15 +76,15 @@ class _DragDropWidgetState extends State<DragDropWidget> {
                   fontWeight: _isDragOver ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
-              SizedBox(height: 30),
+              const SizedBox(height: 30),
               ElevatedButton.icon(
                 onPressed: _pickImage,
-                icon: Icon(Icons.photo_library),
-                label: Text('Select Image'),
+                icon: const Icon(Icons.photo_library),
+                label: const Text('Select Image'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
                   foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(
+                  padding: const EdgeInsets.symmetric(
                     horizontal: 30,
                     vertical: 15,
                   ),
