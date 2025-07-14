@@ -140,10 +140,10 @@ class _PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
                   padding: const EdgeInsets.all(20),
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: Colors.pink[50]?.withOpacity(0.85), // Very light faded pink
+                    color: Colors.pink[50]?.withValues(alpha: 0.85), // Very light faded pink
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: Colors.pink.withOpacity(0.3),
+                      color: Colors.pink.withValues(alpha: 0.3),
                       width: 1.5,
                     ),
                     boxShadow: [
@@ -175,7 +175,7 @@ class _PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
                           letterSpacing: 1.5,
                         ),
                       ),
-                      SizedBox(height: 12),
+                      const SizedBox(height: 12),
                       Text(
                         "Confidence:",
                         style: TextStyle(

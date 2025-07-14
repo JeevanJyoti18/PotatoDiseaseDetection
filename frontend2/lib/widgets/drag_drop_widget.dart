@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import 'dart:typed_data';
 
 class DragDropWidget extends StatefulWidget {
   final Function(File) onFileSelected;
@@ -22,17 +21,17 @@ class _DragDropWidgetState extends State<DragDropWidget> {
   @override
   Widget build(BuildContext context) {
     return DragTarget<File>(
-      onWillAccept: (data) {
+      onWillAcceptWithDetails: (data) {
         setState(() {
           _isDragOver = true;
         });
         return true;
       },
-      onAccept: (file) {
+      onAcceptWithDetails: (details) {
         setState(() {
           _isDragOver = false;
         });
-        widget.onFileSelected(file);
+        widget.onFileSelected(details.data);
       },
       onLeave: (data) {
         setState(() {
@@ -57,7 +56,7 @@ class _DragDropWidgetState extends State<DragDropWidget> {
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+            children: const [
               Icon(
                 _isDragOver ? Icons.cloud_download : Icons.cloud_upload,
                 size: 80,
@@ -65,9 +64,9 @@ class _DragDropWidgetState extends State<DragDropWidget> {
                   ? Theme.of(context).primaryColor 
                   : Colors.grey.shade400,
               ),
-              const SizedBox(height: 20),
+              SizedBox(height: 20),
               Text(
-                widget.dropText,
+                'Drag and drop an image of a potato plant leaf to process',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
@@ -77,15 +76,15 @@ class _DragDropWidgetState extends State<DragDropWidget> {
                   fontWeight: _isDragOver ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: 30),
               ElevatedButton.icon(
-                onPressed: () => _pickImage(),
-                icon: const Icon(Icons.photo_library),
-                label: const Text('Select Image'),
+                onPressed: _pickImage,
+                icon: Icon(Icons.photo_library),
+                label: Text('Select Image'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: Theme.of(context).primaryColor,
                   foregroundColor: Colors.white,
-                  padding: const EdgeInsets.symmetric(
+                  padding: EdgeInsets.symmetric(
                     horizontal: 30,
                     vertical: 15,
                   ),
