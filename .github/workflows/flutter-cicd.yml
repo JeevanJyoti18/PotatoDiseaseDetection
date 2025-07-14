@@ -16,7 +16,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.33.0'
+          # flutter-version: '3.33.0'  # upon removing this, the flutter version is set to latest version
           channel : master
 
       - name: Install dependencies
