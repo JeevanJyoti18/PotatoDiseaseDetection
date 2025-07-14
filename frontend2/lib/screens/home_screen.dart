@@ -8,7 +8,7 @@ import 'dart:convert';
 
 class PotatoDiseaseDetector extends StatefulWidget {
   // ✅ Fix: Add Key parameter for best practice
-  const PotatoDiseaseDetector({Key? key}) : super(key: key);
+  const PotatoDiseaseDetector({super.key});
 
   @override
   PotatoDiseaseDetectorState createState() => PotatoDiseaseDetectorState();
@@ -142,10 +142,10 @@ class PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
                   padding: const EdgeInsets.all(20),
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: Colors.pink[50]?.withOpacity(0.85), // ✅ Fix deprecated withOpacity
+                    color: Colors.pink[50]?.withValues(alpha: 0.85), // ✅ Fix deprecated withOpacity
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: Colors.pink.withOpacity(0.3), // ✅ Fix deprecated withOpacity
+                      color: Colors.pink.withValues(alpha: 0.3), // ✅ Fix deprecated withOpacity
                       width: 1.5,
                     ),
                     boxShadow: const [

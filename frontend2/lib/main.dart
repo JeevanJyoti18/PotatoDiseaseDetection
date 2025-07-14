@@ -23,7 +23,7 @@ class PotatoDiseaseApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      home: PotatoDiseaseDetector(),
+      home: const PotatoDiseaseDetector(),
     );
   }
 } 
