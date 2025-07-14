@@ -4,6 +4,8 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
+import 'dart:convert';
+import 'dart:ui'; // Add this at the top with other imports
 
 class PotatoDiseaseDetector extends StatefulWidget {
   @override
@@ -15,6 +17,8 @@ class _PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
   io.File? pickedFile;        // For mobile
   String resultText = "";     // API result text
   bool isLoading = false;     // Loading indicator
+  String? predictedClass;
+  double? confidence;
 
   Future<void> pickAndClassifyImage() async {
     final result = await FilePicker.platform.pickFiles(
@@ -46,8 +50,7 @@ class _PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
     });
 
     try {
-      var uri = Uri.parse("http://localhost:8000/predict"); // Updated endpoint
-
+      var uri = Uri.parse("https://potato-detector-api-349120048404.us-central1.run.app/predict");
       http.Response response;
 
       if (kIsWeb) {
@@ -69,12 +72,17 @@ class _PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
       }
 
       if (response.statusCode == 200) {
+        final Map<String, dynamic> data = json.decode(response.body);
         setState(() {
-          resultText = response.body; // Show backend response
+          predictedClass = data['class'];
+          confidence = (data['confidence'] as num?)?.toDouble();
+          resultText = ""; // Clear old text
         });
       } else {
         setState(() {
-          resultText = "Error: "+response.body;
+          predictedClass = null;
+          confidence = null;
+          resultText = "Error: ${response.body}";
         });
       }
     } catch (e) {
@@ -127,17 +135,77 @@ class _PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
               const SizedBox(height: 20),
               if (isLoading)
                 const CircularProgressIndicator()
+              else if (predictedClass != null && confidence != null)
+                Container(
+                  padding: const EdgeInsets.all(20),
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.pink[50]?.withOpacity(0.85), // Very light faded pink
+                    borderRadius: BorderRadius.circular(16),
+                    border: Border.all(
+                      color: Colors.pink.withOpacity(0.3),
+                      width: 1.5,
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black12,
+                        blurRadius: 8,
+                        offset: Offset(0, 4),
+                      ),
+                    ],
+                  ),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Text(
+                        "Class:",
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: Colors.pink[800],
+                          fontWeight: FontWeight.w600,
+                          letterSpacing: 1.2,
+                        ),
+                      ),
+                      Text(
+                        predictedClass!,
+                        style: TextStyle(
+                          fontSize: 28,
+                          color: Colors.pink[900],
+                          fontWeight: FontWeight.bold,
+                          letterSpacing: 1.5,
+                        ),
+                      ),
+                      SizedBox(height: 12),
+                      Text(
+                        "Confidence:",
+                        style: TextStyle(
+                          fontSize: 18,
+                          color: Colors.grey[700],
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        "${(confidence! * 100).toStringAsFixed(3)}%",
+                        style: TextStyle(
+                          fontSize: 24,
+                          color: Colors.green[700],
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                )
               else if (resultText.isNotEmpty)
                 Container(
                   padding: const EdgeInsets.all(16),
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.8),
+                    color: Colors.red[100],
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Text(
-                    "Result: $resultText",
-                    style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                    resultText,
+                    style: const TextStyle(fontSize: 16, color: Colors.red, fontWeight: FontWeight.bold),
                     textAlign: TextAlign.center,
                   ),
                 ),

@@ -158,7 +158,7 @@ export const ImageUpload = () => {
       formData.append("file", selectedFile);
       let res = await axios({
         method: "post",
-        url: "http://localhost:8000/predict",
+        url: "https://potato-detector-api-349120048404.us-central1.run.app/predict",
         data: formData,
       });
       console.log(res.status);

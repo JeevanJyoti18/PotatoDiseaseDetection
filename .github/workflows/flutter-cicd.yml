@@ -1,0 +1,56 @@
+name: Flutter CI/CD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          flutter-version: '3.x'
+
+      - name: Install dependencies
+        run: flutter pub get
+
+      - name: Analyze code
+        run: flutter analyze
+
+      - name: Run tests
+        run: flutter test
+
+      - name: Build Android APK (release)
+        run: flutter build apk --dart-define=API_URL=https://api.myapp.com
+
+      - name: Upload APK artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-release-apk
+          path: build/app/outputs/flutter-apk/app-release.apk
+
+      # Optional: Fastlane deployment to Google Play internal track
+      # Uncomment and configure the following steps if you want to use Fastlane
+
+      # - name: Set up Ruby
+      #   uses: ruby/setup-ruby@v1
+      #   with:
+      #     ruby-version: '3.1'
+
+      # - name: Install Fastlane
+      #   run: gem install fastlane
+
+      # - name: Run Fastlane to deploy to Google Play internal track
+      #   env:
+      #     # Set your secrets in GitHub repo settings
+      #     GOOGLE_PLAY_JSON_KEY: ${{ secrets.GOOGLE_PLAY_JSON_KEY }}
+      #   run: |
+      #     echo "$GOOGLE_PLAY_JSON_KEY" > /tmp/google-play-key.json
+      #     fastlane android internal 

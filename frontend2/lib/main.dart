@@ -12,6 +12,7 @@ class PotatoDiseaseApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Potato Disease Detection',
+      debugShowCheckedModeBanner: false, // Remove debug banner
       theme: ThemeData(
         primarySwatch: Colors.pink,
         primaryColor: const Color(0xFFbe6a77),
