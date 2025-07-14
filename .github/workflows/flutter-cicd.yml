@@ -20,21 +20,25 @@ jobs:
 
       - name: Install dependencies
         run: flutter pub get
+        working-directory: frontend2
 
       - name: Analyze code
         run: flutter analyze
+        working-directory: frontend2
 
       - name: Run tests
         run: flutter test
+        working-directory: frontend2
 
       - name: Build Android APK (release)
         run: flutter build apk --dart-define=API_URL=https://api.myapp.com
+        working-directory: frontend2
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: app-release-apk
-          path: build/app/outputs/flutter-apk/app-release.apk
+          path: frontend2/build/app/outputs/flutter-apk/app-release.apk
 
       # Optional: Fastlane deployment to Google Play internal track
       # Uncomment and configure the following steps if you want to use Fastlane
