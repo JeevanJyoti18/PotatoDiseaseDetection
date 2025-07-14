@@ -146,10 +146,10 @@ class PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
                   padding: const EdgeInsets.all(20),
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: Colors.pink[50]!.withOpacity(0.85), // ✅ Fix deprecated withValues
+                    color: Colors.pink[50]?.withValues(alpha: 0.85), // ✅ Fix deprecated withValues
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: Colors.pink.withOpacity(0.3), // ✅ Fix deprecated withValues
+                      color: Colors.pink.withValues(alpha: 0.3), // ✅ Fix deprecated withValues
                       width: 1.5,
                     ),
                     boxShadow: const [

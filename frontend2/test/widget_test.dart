@@ -13,7 +13,7 @@ import 'package:potato_disease_detection/main.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const PotatoDiseaseApp());
+    await tester.pumpWidget(PotatoDiseaseApp(apiUrl: 'https://test-api-url.com'));
 
     // Verify that our counter starts at 0.
     expect(find.text('0'), findsOneWidget);
