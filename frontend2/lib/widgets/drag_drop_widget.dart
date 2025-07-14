@@ -43,16 +43,16 @@ class _DragDropWidgetState extends State<DragDropWidget> {
           height: 300,
           decoration: BoxDecoration(
             border: Border.all(
-              color: _isDragOver 
-                ? Theme.of(context).primaryColor 
-                : Colors.grey.shade300,
+              color: _isDragOver
+                  ? Theme.of(context).primaryColor
+                  : Colors.grey.shade300,
               width: _isDragOver ? 3 : 2,
               style: BorderStyle.solid,
             ),
             borderRadius: BorderRadius.circular(15),
-            color: _isDragOver 
-              ? Theme.of(context).primaryColor.withOpacity(0.1)
-              : Colors.grey.shade50,
+            color: _isDragOver
+                ? Theme.of(context).primaryColor.withValues(alpha: 0.1)
+                : Colors.grey.shade50,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -60,20 +60,21 @@ class _DragDropWidgetState extends State<DragDropWidget> {
               Icon(
                 _isDragOver ? Icons.cloud_download : Icons.cloud_upload,
                 size: 80,
-                color: _isDragOver 
-                  ? Theme.of(context).primaryColor 
-                  : Colors.grey.shade400,
+                color: _isDragOver
+                    ? Theme.of(context).primaryColor
+                    : Colors.grey.shade400,
               ),
               const SizedBox(height: 20),
               Text(
-                'Drag and drop an image of a potato plant leaf to process',
+                widget.dropText, // ✅ use passed-in dropText for flexibility
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 16,
-                  color: _isDragOver 
-                    ? Theme.of(context).primaryColor 
-                    : Colors.grey.shade600,
-                  fontWeight: _isDragOver ? FontWeight.bold : FontWeight.normal,
+                  color: _isDragOver
+                      ? Theme.of(context).primaryColor
+                      : Colors.grey.shade600,
+                  fontWeight:
+                      _isDragOver ? FontWeight.bold : FontWeight.normal,
                 ),
               ),
               const SizedBox(height: 30),
@@ -101,20 +102,18 @@ class _DragDropWidgetState extends State<DragDropWidget> {
   }
 
   Future<void> _pickImage() async {
-    // This would typically use image_picker, but for drag-drop demo
-    // we'll simulate file selection
-    // In a real implementation, you'd use:
-    // final XFile? image = await ImagePicker().pickImage(source: ImageSource.gallery);
-    // if (image != null) {
-    //   widget.onFileSelected(File(image.path));
-    // }
-    
-    // For now, we'll show a dialog to simulate file selection
+    // ✅ NOTE: This method is still a placeholder for file picker logic
+    // Implement image picking here if needed later
+
+    // Simulated dialog for demo
+    if (!mounted) return;
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Select Image'),
-        content: const Text('This would open the file picker in a real implementation.'),
+        content: const Text(
+          'This would open the file picker in a real implementation.',
+        ),
         actions: [
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
@@ -124,4 +123,4 @@ class _DragDropWidgetState extends State<DragDropWidget> {
       ),
     );
   }
-} 
+}

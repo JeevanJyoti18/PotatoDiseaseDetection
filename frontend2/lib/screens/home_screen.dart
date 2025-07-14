@@ -1,12 +1,15 @@
 import 'dart:io' as io; // For mobile
+import 'dart:typed_data'; // ✅ Fix: Import for Uint8List
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'dart:ui'; // Add this at the top with other imports
 
 class PotatoDiseaseDetector extends StatefulWidget {
+  // ✅ Fix: Add Key parameter for best practice
+  const PotatoDiseaseDetector({Key? key}) : super(key: key);
+
   @override
   PotatoDiseaseDetectorState createState() => PotatoDiseaseDetectorState();
 }
@@ -39,7 +42,7 @@ class PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
       // Call your backend API for classification
       await classifyImage(result.files.single);
     } else {
-      // print("No file selected"); // Avoid print in production
+      // debugPrint("No file selected"); ✅ Fix: use debugPrint instead of print
     }
   }
 
@@ -100,7 +103,7 @@ class PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
     return Scaffold(
       appBar: AppBar(title: const Text('Potato Disease Detector')),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
             image: AssetImage('assets/images/bg.png'),
             fit: BoxFit.cover,
@@ -139,10 +142,10 @@ class PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
                   padding: const EdgeInsets.all(20),
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: Colors.pink[50]?.withValues(alpha: 0.85), // Very light faded pink
+                    color: Colors.pink[50]?.withOpacity(0.85), // ✅ Fix deprecated withOpacity
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: Colors.pink.withValues(alpha: 0.3),
+                      color: Colors.pink.withOpacity(0.3), // ✅ Fix deprecated withOpacity
                       width: 1.5,
                     ),
                     boxShadow: const [
@@ -214,4 +217,4 @@ class PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
       ),
     );
   }
-} 
+}
