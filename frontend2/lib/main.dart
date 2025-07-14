@@ -2,17 +2,22 @@ import 'package:flutter/material.dart';
 import 'screens/home_screen.dart';
 
 void main() {
-  runApp(const PotatoDiseaseApp());
+  // Access the backend URL from --dart-define=API_URL=...
+  const String backendUrl = String.fromEnvironment('API_URL', defaultValue: 'http://localhost:8000');
+
+  runApp(PotatoDiseaseApp(apiUrl: backendUrl));
 }
 
 class PotatoDiseaseApp extends StatelessWidget {
-  const PotatoDiseaseApp({super.key});
+  final String apiUrl;
+
+  const PotatoDiseaseApp({super.key, required this.apiUrl});
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Potato Disease Detection',
-      debugShowCheckedModeBanner: false, // Remove debug banner
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.pink,
         primaryColor: const Color(0xFFbe6a77),
@@ -23,7 +28,7 @@ class PotatoDiseaseApp extends StatelessWidget {
           elevation: 0,
         ),
       ),
-      home: const PotatoDiseaseDetector(),
+      home: PotatoDiseaseDetector(apiUrl: apiUrl), // ✅ Pass to screen
     );
   }
-} 
+}

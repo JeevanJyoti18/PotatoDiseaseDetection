@@ -1,5 +1,5 @@
 import 'dart:io' as io; // For mobile
-import 'dart:typed_data'; // ✅ Fix: Import for Uint8List
+import 'dart:typed_data'; // For Uint8List
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
@@ -7,8 +7,12 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class PotatoDiseaseDetector extends StatefulWidget {
-  // ✅ Fix: Add Key parameter for best practice
-  const PotatoDiseaseDetector({super.key});
+  final String apiUrl; // ✅ Accept API URL from main.dart
+
+  const PotatoDiseaseDetector({
+    super.key,
+    required this.apiUrl, // ✅ Required parameter
+  });
 
   @override
   PotatoDiseaseDetectorState createState() => PotatoDiseaseDetectorState();
@@ -42,7 +46,7 @@ class PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
       // Call your backend API for classification
       await classifyImage(result.files.single);
     } else {
-      // debugPrint("No file selected"); ✅ Fix: use debugPrint instead of print
+      debugPrint("No file selected"); // ✅ Use debugPrint
     }
   }
 
@@ -52,7 +56,7 @@ class PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
     });
 
     try {
-      var uri = Uri.parse("https://potato-detector-api-349120048404.us-central1.run.app/predict");
+      var uri = Uri.parse("${widget.apiUrl}/predict"); // ✅ Use dynamic API URL
       http.Response response;
 
       if (kIsWeb) {
@@ -142,10 +146,10 @@ class PotatoDiseaseDetectorState extends State<PotatoDiseaseDetector> {
                   padding: const EdgeInsets.all(20),
                   margin: const EdgeInsets.symmetric(horizontal: 16),
                   decoration: BoxDecoration(
-                    color: Colors.pink[50]?.withValues(alpha: 0.85), // ✅ Fix deprecated withOpacity
+                    color: Colors.pink[50]!.withOpacity(0.85), // ✅ Fix deprecated withValues
                     borderRadius: BorderRadius.circular(16),
                     border: Border.all(
-                      color: Colors.pink.withValues(alpha: 0.3), // ✅ Fix deprecated withOpacity
+                      color: Colors.pink.withOpacity(0.3), // ✅ Fix deprecated withValues
                       width: 1.5,
                     ),
                     boxShadow: const [
